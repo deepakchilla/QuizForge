@@ -62,6 +62,10 @@ QuizForge/
 │   │   ├── assets/
 │   │   ├── components/
 │   │   ├── pages/
+|   |   |   ├── CreateShortCut.jsx
+|   |   |   ├── Home.jsx
+|   |   |   ├── JoinChallenge.jsx
+|   |   |   ├── PlayQuiz.jsx
 │   │   ├── App.jsx
 │   │   ├── App.css
 │   │   ├── index.css
@@ -72,7 +76,6 @@ QuizForge/
 └── README.md
 ```
 
-*The structure above is illustrative; update it if your actual folder and file names differ.*
 
 ## 🚀 Getting Started
 
