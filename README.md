@@ -37,7 +37,7 @@ QuizForge is a web application designed to make quizzes and challenges more enga
 
 ## 📸 Screenshots
 
-Add screenshots of your actual application here as the UI develops.
+Coming Soon!
 
 <!-- Replace these placeholders with screenshots committed to your repository. -->
 
@@ -144,7 +144,3 @@ Suggestions, bug reports, and contributions are welcome. Feel free to open an is
 No license has been specified yet.
 
 ---
-
-<p align="center">
-  Built with ❤️ as a web development project.
-</p>
