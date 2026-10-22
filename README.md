@@ -142,5 +142,3 @@ Suggestions, bug reports, and contributions are welcome. Feel free to open an is
 ## 📄 License
 
 No license has been specified yet.
-
----
