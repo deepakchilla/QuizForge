@@ -46,8 +46,32 @@ const TEAM_COLORS = [
   { bg: "rgba(249,115,22,0.15)", border: "rgba(249,115,22,0.5)", accent: "#fb923c", name: "Orange" },
 ];
 
-function makeTeam(index) {
-  return { id: Date.now() + index, name: `Team ${index + 1}` };
+export const DEFAULT_TEAM_NAMES = [
+  "Cyber Dragons",
+  "Code Ninjas",
+  "Quantum Sparks",
+  "Byte Brawlers",
+  "Pixel Pirates",
+  "Neon Knights",
+  "Shadow Hackers",
+  "Logic Legends",
+  "Algo Aces",
+  "Turbo Titans",
+  "Binary Beasts",
+  "Cosmic Pioneers",
+];
+
+function makeTeam(index, existingTeams = []) {
+  const existingNames = new Set(
+    existingTeams.map((t) => t.name.trim().toLowerCase())
+  );
+  const candidate = DEFAULT_TEAM_NAMES.find(
+    (name) => !existingNames.has(name.toLowerCase())
+  );
+  return {
+    id: Date.now() + index + Math.random(),
+    name: candidate || `Team ${index + 1}`,
+  };
 }
 
 function makeQuestion() {
@@ -71,7 +95,10 @@ export default function CreateChallenge() {
   const [gameMode, setGameMode] = useState("Team vs Team");
 
   // --- Team vs Team config ---
-  const [teams, setTeams] = useState([makeTeam(0), makeTeam(1)]);
+  const [teams, setTeams] = useState(() => [
+    { id: 1, name: "Cyber Dragons" },
+    { id: 2, name: "Code Ninjas" },
+  ]);
 
   // --- Survival config ---
   const [survivalLives, setSurvivalLives] = useState(3);
@@ -88,7 +115,7 @@ export default function CreateChallenge() {
   // ─── Teams helpers ───────────────────────────────────────────────
   const addTeam = () => {
     if (teams.length >= 10) return;
-    setTeams((t) => [...t, makeTeam(t.length)]);
+    setTeams((t) => [...t, makeTeam(t.length, t)]);
   };
 
   const removeTeam = (id) => {
@@ -98,6 +125,23 @@ export default function CreateChallenge() {
 
   const updateTeamName = (id, name) => {
     setTeams((t) => t.map((tm) => (tm.id === id ? { ...tm, name } : tm)));
+  };
+
+  const randomizeTeamName = (id) => {
+    setTeams((prevTeams) => {
+      const currentTeam = prevTeams.find((t) => t.id === id);
+      const otherNames = new Set(
+        prevTeams.filter((t) => t.id !== id).map((t) => t.name.trim().toLowerCase())
+      );
+      const candidates = DEFAULT_TEAM_NAMES.filter(
+        (n) =>
+          !otherNames.has(n.toLowerCase()) &&
+          n.toLowerCase() !== currentTeam?.name.trim().toLowerCase()
+      );
+      const pool = candidates.length > 0 ? candidates : DEFAULT_TEAM_NAMES;
+      const chosen = pool[Math.floor(Math.random() * pool.length)];
+      return prevTeams.map((t) => (t.id === id ? { ...t, name: chosen } : t));
+    });
   };
 
   // ─── Questions helpers ───────────────────────────────────────────
@@ -312,10 +356,18 @@ export default function CreateChallenge() {
                         className="team-name-input"
                         value={team.name}
                         onChange={(e) => updateTeamName(team.id, e.target.value)}
-                        placeholder={`Team ${idx + 1}`}
+                        placeholder={`Team ${idx + 1} Name`}
                         maxLength={30}
                         style={{ color: col.accent }}
                       />
+                      <button
+                        type="button"
+                        className="team-randomize-btn"
+                        onClick={() => randomizeTeamName(team.id)}
+                        title="Pick random creative team name"
+                      >
+                        <Sparkles size={13} />
+                      </button>
                       {teams.length > 2 && (
                         <button
                           type="button"
@@ -418,7 +470,11 @@ export default function CreateChallenge() {
                 return (
                   <div className="question-item-card" key={question.id}>
                     {/* Card header */}
-                    <div className="q-card-header">
+                    <div
+                      className="q-card-header"
+                      onClick={() => toggleExpand(question.id)}
+                      title={isExpanded ? "Click to collapse question" : "Click to expand question"}
+                    >
                       <div className="q-number">{index + 1}</div>
                       <div className="q-header-info">
                         <span className="q-prompt-preview">
@@ -439,7 +495,10 @@ export default function CreateChallenge() {
                           <button
                             type="button"
                             className="remove-question"
-                            onClick={() => removeQuestion(question.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeQuestion(question.id);
+                            }}
                             title="Remove question"
                           >
                             <Trash2 size={14} />
@@ -448,7 +507,10 @@ export default function CreateChallenge() {
                         <button
                           type="button"
                           className="q-expand-btn"
-                          onClick={() => toggleExpand(question.id)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleExpand(question.id);
+                          }}
                           title={isExpanded ? "Collapse" : "Expand"}
                         >
                           {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -527,7 +589,13 @@ export default function CreateChallenge() {
                                   >
                                     {isCorrect ? <Check size={13} /> : null}
                                   </button>
-                                  <span className="option-letter">{letter}</span>
+                                  <span
+                                    className="option-letter"
+                                    onClick={() => setCorrect(question.id, optIdx)}
+                                    title={`Mark ${letter} as correct`}
+                                  >
+                                    {letter}
+                                  </span>
                                   <input
                                     type="text"
                                     className="option-text-input"

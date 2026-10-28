@@ -69,6 +69,10 @@ export const DEFAULT_QUIZZES = [
     category: 'Science',
     gameMode: 'Team vs Team',
     createdAt: '2026-10-05T14:30:00.000Z',
+    teams: [
+      { id: 't1', name: 'Astro Voyagers', colorIndex: 0 },
+      { id: 't2', name: 'Cosmic Pioneers', colorIndex: 1 },
+    ],
     questions: [
       {
         id: 'q1',

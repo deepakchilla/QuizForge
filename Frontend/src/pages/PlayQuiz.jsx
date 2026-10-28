@@ -206,9 +206,12 @@ function SoloArena({ quiz, pin, nickname }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 //  TEAM VS TEAM mode arena
 // ═══════════════════════════════════════════════════════════════════════════════
-function TeamArena({ quiz, pin }) {
+function TeamArena({ quiz, pin, customTeams }) {
   const navigate = useNavigate();
-  const teams = quiz.teams || [{ id: 'a', name: 'Team A', colorIndex: 0 }, { id: 'b', name: 'Team B', colorIndex: 1 }];
+  const teams = customTeams || quiz.teams || [
+    { id: 'a', name: 'Cyber Dragons', colorIndex: 0 },
+    { id: 'b', name: 'Code Ninjas', colorIndex: 1 }
+  ];
 
   const [gameState, setGameState] = useState('playing');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -664,6 +667,54 @@ function QuestionCard({ question, index, total, timeLeft, selectedOption, isLock
 function ReadyScreen({ quiz, pin, onStart }) {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
+  const [lobbyTeams, setLobbyTeams] = useState(() => {
+    if (quiz.teams && quiz.teams.length > 0) {
+      return quiz.teams.map((t, i) => ({
+        id: t.id || `team-${i}`,
+        name: t.name || `Team ${i + 1}`,
+        colorIndex: t.colorIndex ?? i,
+      }));
+    }
+    return [
+      { id: 't1', name: 'Cyber Dragons', colorIndex: 0 },
+      { id: 't2', name: 'Code Ninjas', colorIndex: 1 },
+    ];
+  });
+
+  const updateLobbyTeamName = (index, name) => {
+    setLobbyTeams((prev) =>
+      prev.map((t, i) => (i === index ? { ...t, name } : t))
+    );
+  };
+
+  const randomizeLobbyTeamName = (index) => {
+    const defaultPool = [
+      'Cyber Dragons',
+      'Code Ninjas',
+      'Quantum Sparks',
+      'Byte Brawlers',
+      'Pixel Pirates',
+      'Neon Knights',
+      'Shadow Hackers',
+      'Logic Legends',
+      'Algo Aces',
+      'Turbo Titans',
+      'Binary Beasts',
+      'Cosmic Pioneers',
+    ];
+    setLobbyTeams((prev) => {
+      const otherNames = new Set(
+        prev.filter((_, i) => i !== index).map((t) => t.name.trim().toLowerCase())
+      );
+      const candidates = defaultPool.filter(
+        (n) => !otherNames.has(n.toLowerCase())
+      );
+      const pool = candidates.length > 0 ? candidates : defaultPool;
+      const chosen = pool[Math.floor(Math.random() * pool.length)];
+      return prev.map((t, i) => (i === index ? { ...t, name: chosen } : t));
+    });
+  };
+
   const totalPoints = quiz.questions.reduce((s, q) => s + (q.points || 0), 0);
   const totalTime = quiz.questions.reduce((s, q) => s + (q.time || 0), 0);
 
@@ -692,17 +743,45 @@ function ReadyScreen({ quiz, pin, onStart }) {
         </div>
 
         {/* Team list for Team vs Team */}
-        {quiz.gameMode === 'Team vs Team' && quiz.teams?.length > 0 && (
-          <div className="ready-team-list">
-            {quiz.teams.map((team, i) => {
-              const col = TEAM_COLORS[(team.colorIndex ?? i) % TEAM_COLORS.length];
-              return (
-                <div key={team.id} className="ready-team-row" style={{ background: col.bg, borderColor: col.border, color: col.accent }}>
-                  <Users size={14} />
-                  <span>{team.name}</span>
-                </div>
-              );
-            })}
+        {quiz.gameMode === 'Team vs Team' && (
+          <div className="ready-teams-section">
+            <div className="ready-teams-label">
+              <Users size={14} />
+              <span>Name Your Teams</span>
+            </div>
+            <div className="ready-team-list">
+              {lobbyTeams.map((team, i) => {
+                const col = TEAM_COLORS[(team.colorIndex ?? i) % TEAM_COLORS.length];
+                return (
+                  <div
+                    key={team.id || i}
+                    className="ready-team-edit-card"
+                    style={{ background: col.bg, borderColor: col.border }}
+                  >
+                    <span className="ready-team-index" style={{ color: col.accent }}>
+                      Team {i + 1}
+                    </span>
+                    <input
+                      type="text"
+                      className="ready-team-input"
+                      value={team.name}
+                      onChange={(e) => updateLobbyTeamName(i, e.target.value)}
+                      placeholder={`Team ${i + 1} Name`}
+                      maxLength={30}
+                      style={{ color: col.accent }}
+                    />
+                    <button
+                      type="button"
+                      className="team-randomize-btn"
+                      onClick={() => randomizeLobbyTeamName(i)}
+                      title="Pick random team name"
+                    >
+                      <Sparkles size={14} />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 
@@ -730,7 +809,7 @@ function ReadyScreen({ quiz, pin, onStart }) {
 
         <button
           className="button button-primary btn-block"
-          onClick={() => onStart(nickname || 'Player')}
+          onClick={() => onStart(nickname || 'Player', lobbyTeams)}
         >
           <Zap size={18} />
           <span>Start {quiz.gameMode === 'Team vs Team' ? 'Team Battle' : quiz.gameMode === 'Survival' ? 'Survival Run' : 'Solo Challenge'}</span>
@@ -751,6 +830,7 @@ export default function PlayQuiz() {
   const [quiz, setQuiz] = useState(null);
   const [started, setStarted] = useState(false);
   const [nickname, setNickname] = useState(location.state?.nickname || 'Player');
+  const [customTeams, setCustomTeams] = useState(null);
 
   useEffect(() => {
     const found = getQuizByPin(pin);
@@ -781,13 +861,17 @@ export default function PlayQuiz() {
       <ReadyScreen
         quiz={quiz}
         pin={pin}
-        onStart={(nick) => { setNickname(nick); setStarted(true); }}
+        onStart={(nick, teams) => {
+          setNickname(nick);
+          if (teams) setCustomTeams(teams);
+          setStarted(true);
+        }}
       />
     );
   }
 
   // Route to correct mode
-  if (quiz.gameMode === 'Team vs Team') return <TeamArena quiz={quiz} pin={pin} />;
+  if (quiz.gameMode === 'Team vs Team') return <TeamArena quiz={quiz} pin={pin} customTeams={customTeams} />;
   if (quiz.gameMode === 'Survival') return <SurvivalArena quiz={quiz} pin={pin} nickname={nickname} />;
   return <SoloArena quiz={quiz} pin={pin} nickname={nickname} />;
 }
