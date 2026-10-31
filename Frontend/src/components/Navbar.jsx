@@ -1,4 +1,4 @@
-import { Trophy, Zap, Plus, LogIn } from 'lucide-react';
+import { Trophy, Plus, Play } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 
 export default function Navbar() {
@@ -16,8 +16,8 @@ export default function Navbar() {
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
             Home
           </NavLink>
-          <NavLink to="/join" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
-            Join Game
+          <NavLink to="/play" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+            Challenges
           </NavLink>
           <NavLink to="/create" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
             Create Quiz
@@ -25,9 +25,9 @@ export default function Navbar() {
         </nav>
 
         <div className="navbar-actions">
-          <Link to="/join" className="btn btn-ghost">
-            <LogIn size={16} />
-            <span>Enter PIN</span>
+          <Link to="/play" className="btn btn-ghost">
+            <Play size={15} />
+            <span>Play Now</span>
           </Link>
           <Link to="/create" className="btn btn-nav-primary">
             <Plus size={16} />

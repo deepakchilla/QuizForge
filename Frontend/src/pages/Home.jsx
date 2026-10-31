@@ -7,8 +7,6 @@ import {
   Clock,
   Play,
   Flame,
-  KeyRound,
-  Check,
   Sparkles,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -17,19 +15,11 @@ import { getQuizzes } from "../utils/quizStorage";
 function Home() {
   const navigate = useNavigate();
   const [quizzes, setQuizzes] = useState([]);
-  const [copiedPin, setCopiedPin] = useState(null);
 
   useEffect(() => {
     const list = getQuizzes();
     setQuizzes(list);
   }, []);
-
-  const handleCopyPin = (pin, event) => {
-    event.stopPropagation();
-    navigator.clipboard.writeText(pin);
-    setCopiedPin(pin);
-    setTimeout(() => setCopiedPin(null), 2000);
-  };
 
   return (
     <main className="home-page">
@@ -62,9 +52,15 @@ function Home() {
 
             <button
               className="button button-secondary"
-              onClick={() => navigate("/join")}
+              onClick={() => navigate("/play")}
             >
-              Join a Challenge
+              Play Challenges
+            </button>
+            <button
+              className="button button-secondary"
+              onClick={() => navigate("/auction")}
+            >
+              Auction Game
             </button>
           </div>
 
@@ -144,7 +140,7 @@ function Home() {
         <div className="section-header-block">
           <div>
             <h2>Explore Active Challenges</h2>
-            <p>Jump directly into pre-loaded quizzes or enter a PIN to join a custom battle.</p>
+            <p>Jump directly into any quiz and start competing immediately.</p>
           </div>
 
           <button
@@ -171,17 +167,7 @@ function Home() {
               <div className="challenge-card" key={quiz.id}>
                 <div className="challenge-card-top">
                   <span className="challenge-category-tag">{quiz.category}</span>
-                  <button
-                    className="challenge-pin-badge"
-                    onClick={(e) => handleCopyPin(quiz.pin, e)}
-                    title="Click to copy PIN"
-                  >
-                    <KeyRound size={12} />
-                    <span>PIN: {quiz.pin}</span>
-                    {copiedPin === quiz.pin ? (
-                      <Check size={12} color="#10b981" />
-                    ) : null}
-                  </button>
+                  <span className="challenge-mode-badge">{quiz.gameMode}</span>
                 </div>
 
                 <h3>{quiz.title}</h3>
@@ -202,7 +188,7 @@ function Home() {
                   <button
                     className="button button-primary btn-sm"
                     style={{ flex: 1 }}
-                    onClick={() => navigate(`/play/${quiz.pin}`)}
+                    onClick={() => navigate(`/play/${quiz.id || quiz.pin}`)}
                   >
                     <Play size={14} />
                     <span>Play Challenge</span>

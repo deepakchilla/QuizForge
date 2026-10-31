@@ -19,7 +19,7 @@ import {
   Award,
   Sword,
 } from 'lucide-react';
-import { getQuizByPin, saveGameScore } from '../utils/quizStorage';
+import { getQuiz, saveGameScore } from '../utils/quizStorage';
 
 // ─── Color palette for teams ─────────────────────────────────────────────────
 const TEAM_COLORS = [
@@ -823,7 +823,7 @@ function ReadyScreen({ quiz, pin, onStart }) {
 //  Main router component
 // ═══════════════════════════════════════════════════════════════════════════════
 export default function PlayQuiz() {
-  const { pin } = useParams();
+  const { pin: id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -833,9 +833,9 @@ export default function PlayQuiz() {
   const [customTeams, setCustomTeams] = useState(null);
 
   useEffect(() => {
-    const found = getQuizByPin(pin);
+    const found = getQuiz(id);
     setQuiz(found);
-  }, [pin]);
+  }, [id]);
 
   if (!quiz) {
     return (
@@ -846,11 +846,16 @@ export default function PlayQuiz() {
               <XCircle size={30} />
             </div>
             <h2>Challenge Not Found</h2>
-            <p>No active battle corresponds to PIN: <strong>{pin}</strong></p>
+            <p>No active battle corresponds to: <strong>{id}</strong></p>
           </div>
-          <button className="button button-primary btn-block" onClick={() => navigate('/join')}>
-            <ArrowLeft size={16} /><span>Try Another PIN</span>
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1.5rem' }}>
+            <button className="button button-primary btn-block" onClick={() => navigate('/play')}>
+              <ArrowLeft size={16} /><span>Browse All Challenges</span>
+            </button>
+            <button className="button button-secondary btn-block" onClick={() => navigate('/')}>
+              <span>Back to Home</span>
+            </button>
+          </div>
         </div>
       </main>
     );

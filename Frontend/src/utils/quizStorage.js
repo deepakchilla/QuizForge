@@ -167,40 +167,33 @@ export function getQuizzes() {
 }
 
 /**
- * Generates a unique 6-digit numeric PIN not already used.
+ * Finds a quiz by ID or PIN (supporting both for seamless backwards compatibility).
  */
-export function generateUniquePin() {
-  const existingQuizzes = getQuizzes();
-  const existingPins = new Set(existingQuizzes.map((q) => String(q.pin)));
-  
-  let attempts = 0;
-  while (attempts < 1000) {
-    const pin = Math.floor(100000 + Math.random() * 900000).toString();
-    if (!existingPins.has(pin)) {
-      return pin;
-    }
-    attempts++;
-  }
-  return String(Date.now()).slice(-6);
+export function getQuiz(identifier) {
+  if (!identifier) return null;
+  const clean = String(identifier).trim().toLowerCase();
+  const quizzes = getQuizzes();
+  return (
+    quizzes.find(
+      (q) =>
+        String(q.id || '').toLowerCase() === clean ||
+        String(q.pin || '').trim().toLowerCase() === clean
+    ) || null
+  );
 }
 
 /**
- * Finds a quiz by 6-digit PIN.
+ * Finds a quiz by PIN or ID.
  */
 export function getQuizByPin(pin) {
-  if (!pin) return null;
-  const cleanPin = String(pin).trim();
-  const quizzes = getQuizzes();
-  return quizzes.find((q) => String(q.pin).trim() === cleanPin) || null;
+  return getQuiz(pin);
 }
 
 /**
  * Finds a quiz by ID.
  */
 export function getQuizById(id) {
-  if (!id) return null;
-  const quizzes = getQuizzes();
-  return quizzes.find((q) => q.id === id) || null;
+  return getQuiz(id);
 }
 
 /**
@@ -208,18 +201,24 @@ export function getQuizById(id) {
  */
 export function saveQuiz(quizData) {
   const quizzes = getQuizzes();
-  const pin = quizData.pin || generateUniquePin();
-  const id = quizData.id || `quiz-${Date.now()}`;
+  const slug = (quizData.title || 'challenge')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .slice(0, 30);
+  const id = quizData.id || `${slug || 'challenge'}-${Date.now().toString().slice(-6)}`;
   const createdAt = quizData.createdAt || new Date().toISOString();
 
   const formattedQuiz = {
     ...quizData,
     id,
-    pin,
     createdAt,
   };
 
-  const existingIndex = quizzes.findIndex((q) => q.id === id || q.pin === pin);
+  const existingIndex = quizzes.findIndex(
+    (q) => q.id === id || (quizData.id && q.id === quizData.id)
+  );
+
   let updatedList;
   if (existingIndex >= 0) {
     updatedList = [...quizzes];
@@ -238,20 +237,39 @@ export function saveQuiz(quizData) {
 }
 
 /**
+ * Deletes a quiz by ID or PIN.
+ */
+export function deleteQuiz(id) {
+  try {
+    const quizzes = getQuizzes();
+    const clean = String(id).trim().toLowerCase();
+    const updated = quizzes.filter(
+      (q) => String(q.id).toLowerCase() !== clean && String(q.pin || '').toLowerCase() !== clean
+    );
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    return updated;
+  } catch (error) {
+    console.error('Error deleting quiz from localStorage:', error);
+    return getQuizzes();
+  }
+}
+
+/**
  * Saves a score record for a quiz.
  */
-export function saveGameScore(pin, scoreRecord) {
+export function saveGameScore(quizId, scoreRecord) {
   try {
     const raw = localStorage.getItem(SCORES_KEY);
     const allScores = raw ? JSON.parse(raw) : {};
-    const quizScores = allScores[pin] || [];
+    const key = String(quizId);
+    const quizScores = allScores[key] || [];
 
     const recordWithMeta = {
       ...scoreRecord,
       timestamp: new Date().toISOString(),
     };
 
-    allScores[pin] = [recordWithMeta, ...quizScores].slice(0, 50); // keep last 50
+    allScores[key] = [recordWithMeta, ...quizScores].slice(0, 50); // keep last 50
     localStorage.setItem(SCORES_KEY, JSON.stringify(allScores));
     return recordWithMeta;
   } catch (err) {
@@ -261,14 +279,14 @@ export function saveGameScore(pin, scoreRecord) {
 }
 
 /**
- * Gets high scores / leaderboard for a quiz PIN.
+ * Gets high scores / leaderboard for a quiz.
  */
-export function getGameScores(pin) {
+export function getGameScores(quizId) {
   try {
     const raw = localStorage.getItem(SCORES_KEY);
     if (!raw) return [];
     const allScores = JSON.parse(raw);
-    const list = allScores[pin] || [];
+    const list = allScores[String(quizId)] || [];
     return list.sort((a, b) => b.score - a.score);
   } catch {
     return [];

@@ -3223,3 +3223,1401 @@ button {
   .form-actions { flex-direction: column; }
   .form-actions .button { width: 100%; }
 }
+
+/* =========================================================
+   QUIZFORGE - AUCTION SETUP PAGE
+   ========================================================= */
+
+/* Main page */
+
+.auction-page {
+  max-width: 1240px;
+  width: 92%;
+  margin: 0 auto;
+  padding: 40px 0 70px;
+}
+
+.auction-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 35px;
+}
+
+.auction-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auction-header-actions .button {
+  min-height: 40px;
+  padding: 9px 15px;
+  font-size: 12px;
+}
+
+/* Heading */
+
+.auction-heading {
+  text-align: center;
+  margin: 25px auto 40px;
+  max-width: 650px;
+}
+
+.auction-heading-icon {
+  width: 65px;
+  height: 65px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 18px;
+  color: #c084fc;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.auction-heading h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+}
+
+.auction-heading p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Main layout */
+
+.auction-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(290px, 0.85fr);
+  gap: 25px;
+  align-items: start;
+}
+
+.auction-main {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+.auction-section {
+  padding: 26px;
+  min-width: 0;
+}
+
+/* Section headings */
+
+.auction-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 25px;
+}
+
+.auction-section-heading > div:last-of-type {
+  flex: 1;
+  min-width: 0;
+}
+
+.auction-section-heading h2 {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.auction-section-heading p {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.auction-section-icon {
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+}
+
+.auction-section-icon.purple {
+  color: #c084fc;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.auction-section-icon.cyan {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.auction-section-icon.amber {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.auction-section-icon.emerald {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.auction-count {
+  flex-shrink: 0;
+  padding: 5px 11px;
+  border-radius: 20px;
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Team configuration */
+
+.auction-teams-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.auction-team-card {
+  min-width: 0;
+  padding: 17px;
+  background: rgba(11, 16, 32, 0.55);
+  border: 1px solid var(--border-color);
+  border-top: 3px solid var(--team-accent);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.auction-team-card:hover {
+  border-color: var(--team-accent);
+  transform: translateY(-2px);
+}
+
+.auction-team-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.auction-team-number {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--team-accent);
+}
+
+.auction-team-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.auction-icon-button {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.auction-icon-button:hover {
+  color: var(--text-main);
+  border-color: var(--border-glow);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.auction-icon-button.danger {
+  color: #f87171;
+}
+
+.auction-icon-button.danger:hover {
+  background: rgba(248, 113, 113, 0.1);
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+.auction-team-name {
+  font-size: 13px;
+}
+
+.auction-budget-field {
+  margin-bottom: 0;
+}
+
+.auction-input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auction-input-with-icon > svg {
+  position: absolute;
+  left: 13px;
+  color: var(--accent-emerald);
+  pointer-events: none;
+}
+
+.auction-input-with-icon input {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 12px 11px 39px;
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.auction-input-with-icon input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+/* Add team button */
+
+.auction-add-team {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  color: #c084fc;
+  background: rgba(139, 92, 246, 0.04);
+  border: 1px dashed rgba(139, 92, 246, 0.4);
+  border-radius: var(--radius-md);
+  transition: all 0.2s;
+}
+
+.auction-add-team:hover {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: #a78bfa;
+  transform: translateY(-2px);
+}
+
+.auction-add-team span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.auction-add-team small {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* Player configuration and bidding rules */
+
+.auction-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.auction-fields-grid .form-group {
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.auction-field-hint {
+  color: var(--text-dim);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.auction-info-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 15px;
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.06);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: var(--radius-md);
+}
+
+.auction-info-note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.auction-info-note p {
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* Create button */
+
+.auction-create-button {
+  width: 100%;
+  min-height: 52px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Live summary sidebar */
+
+.auction-summary {
+  position: sticky;
+  top: 100px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.auction-summary .preview-top {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.auction-summary-content {
+  padding: 25px;
+}
+
+.auction-summary-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 18px;
+  color: #c084fc;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 17px;
+}
+
+.auction-summary-content > h2 {
+  font-family: var(--font-heading);
+  font-size: 21px;
+  font-weight: 800;
+  text-align: center;
+  overflow-wrap: anywhere;
+  margin-bottom: 5px;
+}
+
+.auction-summary-subtitle {
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 12px;
+}
+
+.auction-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.auction-summary-stats > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 13px 5px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.auction-summary-stats strong {
+  color: #c084fc;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+
+.auction-summary-stats span {
+  color: var(--text-muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+.auction-summary-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 20px 0;
+}
+
+.auction-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  font-size: 12px;
+}
+
+.auction-summary-row span {
+  color: var(--text-muted);
+}
+
+.auction-summary-row strong {
+  color: var(--text-main);
+  text-align: right;
+}
+
+.auction-summary-content > h3 {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.auction-summary-team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auction-summary-team {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  font-size: 12px;
+}
+
+.auction-team-dot {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.auction-summary-team > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--text-muted);
+}
+
+.auction-summary-team strong {
+  color: var(--text-main);
+}
+
+.auction-summary-note {
+  margin-top: 22px;
+}
+
+/* Validation modal */
+
+.auction-page .modal-dialog {
+  max-width: 440px;
+}
+
+.auction-page .modal-dialog .button {
+  width: 100%;
+}
+
+/* Responsive design */
+
+@media (max-width: 900px) {
+  .auction-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .auction-summary {
+    position: static;
+  }
+
+  .auction-summary-content {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 600px) {
+  .auction-page {
+    width: 92%;
+    padding-top: 25px;
+  }
+
+  .auction-page-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .auction-header-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .auction-heading {
+    margin: 20px auto 30px;
+  }
+
+  .auction-section {
+    padding: 18px;
+  }
+
+  .auction-teams-grid,
+  .auction-fields-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .auction-add-team {
+    min-height: 130px;
+  }
+
+  .auction-section-heading {
+    gap: 10px;
+  }
+
+  .auction-section-heading h2 {
+    font-size: 16px;
+  }
+
+  .auction-summary-content {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .auction-header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .auction-header-actions .button {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .auction-summary-stats {
+    gap: 6px;
+  }
+}
+
+/* =========================================
+   QUIZFORGE - AUCTION ITEMS PAGE
+========================================= */
+
+.auction-items-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 24px 60px;
+}
+
+.auction-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+}
+
+/* Header */
+
+.auction-items-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.auction-items-header h1 {
+  margin: 16px 0 8px;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+}
+
+.auction-items-header p {
+  max-width: 600px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.auction-item-count {
+  min-width: 115px;
+  padding: 18px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.auction-item-count strong {
+  font-size: 1.8rem;
+  color: var(--primary);
+}
+
+.auction-item-count span {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+/* Main layout */
+
+.auction-items-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.5fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.auction-item-form {
+  min-width: 0;
+  padding: 24px;
+}
+
+.auction-item-form h2 {
+  margin-bottom: 6px;
+}
+
+.auction-item-form .subtitle {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.auction-item-form .form-group {
+  margin-bottom: 20px;
+}
+
+.auction-item-form .text-input {
+  width: 100%;
+  min-width: 0;
+}
+
+.auction-description-input {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* Image upload */
+
+.auction-image-upload {
+  width: 100%;
+  min-height: 190px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-dim);
+  transition: 0.2s ease;
+}
+
+.auction-image-upload:hover {
+  border-color: var(--primary);
+  background: rgba(139, 92, 246, 0.07);
+  color: var(--text-main);
+}
+
+.auction-image-upload svg {
+  color: var(--primary);
+}
+
+.auction-image-upload strong {
+  color: var(--text-main);
+}
+
+.auction-image-upload span {
+  font-size: 0.78rem;
+}
+
+.auction-image-upload img {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}
+
+.auction-item-form .btn-sm {
+  margin-top: 10px;
+}
+
+/* Form actions */
+
+.auction-item-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.auction-item-form-actions button {
+  flex: 1;
+}
+
+/* Item pool */
+
+.auction-item-list {
+  min-width: 0;
+}
+
+.auction-item-list .section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.auction-item-list .section-head h2 {
+  margin: 0;
+}
+
+.auction-items-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Individual item cards */
+
+.auction-item-card {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.auction-item-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(139, 92, 246, 0.45);
+}
+
+.auction-item-thumbnail {
+  display: block;
+  width: 100%;
+  height: 175px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.auction-no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+}
+
+.auction-item-card-content {
+  padding: 16px;
+}
+
+.auction-item-card-content h3 {
+  margin: 0 0 9px;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.auction-item-card-content p {
+  min-height: 42px;
+  margin: 0 0 13px;
+  color: var(--text-dim);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.auction-item-card-content > strong {
+  display: block;
+  color: #c084fc;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+/* Edit and delete buttons */
+
+.auction-item-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.auction-item-card-actions button {
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+}
+
+/* Empty state */
+
+.auction-empty-state {
+  min-height: 260px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.auction-empty-state svg {
+  color: var(--primary);
+  margin-bottom: 14px;
+}
+
+.auction-empty-state h3 {
+  margin-bottom: 8px;
+}
+
+.auction-empty-state p {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .auction-items-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .auction-items-page {
+    padding: 20px 15px 40px;
+  }
+
+  .auction-items-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .auction-item-count {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .auction-items-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .auction-item-form {
+    padding: 18px;
+  }
+}
+
+
+/* =========================================
+   QUIZFORGE - LIVE AUCTION HOST PAGE
+========================================= */
+
+.live-auction-page {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 30px 24px 60px;
+}
+
+.live-auction-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.live-auction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.live-auction-header h1 {
+  margin: 16px 0 7px;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.live-auction-header p {
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.live-host-badge {
+  display: inline-flex;
+  margin-top: 20px;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Statistics */
+
+.live-auction-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.live-stat-card {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.live-stat-card > svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.live-stat-card div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.live-stat-card strong {
+  font-size: 1.45rem;
+}
+
+.live-stat-card span {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+/* Main auction layout */
+
+.live-auction-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  align-items: start;
+  gap: 22px;
+}
+
+.live-current-item,
+.live-bidding-panel,
+.live-teams-section,
+.live-history-section {
+  padding: 24px;
+  min-width: 0;
+}
+
+.live-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.live-section-heading h2 {
+  margin: 5px 0 0;
+  font-size: 1.3rem;
+}
+
+.live-section-heading > svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.live-overline {
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 1.3px;
+}
+
+/* Current item */
+
+.live-item-image {
+  width: 100%;
+  height: 290px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.live-item-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.live-no-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-dim);
+}
+
+.live-no-image svg {
+  color: var(--primary);
+}
+
+.live-item-details {
+  padding-top: 20px;
+}
+
+.live-item-details h2 {
+  font-size: 1.55rem;
+  margin: 0 0 9px;
+  overflow-wrap: anywhere;
+}
+
+.live-item-details p {
+  color: var(--text-dim);
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.live-base-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0 0;
+  margin-top: 17px;
+  border-top: 1px solid var(--border-color);
+}
+
+.live-base-price span {
+  color: var(--text-dim);
+}
+
+.live-base-price strong {
+  color: var(--primary);
+  font-size: 1.15rem;
+}
+
+/* Bidding panel */
+
+.live-bidding-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.live-current-bid {
+  padding: 25px 15px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  background: rgba(139, 92, 246, 0.09);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.live-current-bid span {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.live-current-bid strong {
+  color: #c084fc;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+}
+
+.live-current-bid small {
+  color: var(--text-dim);
+}
+
+.live-increment-button {
+  width: 100%;
+  justify-content: center;
+  min-height: 48px;
+}
+
+.live-team-select {
+  margin-top: 24px;
+}
+
+.live-team-select select {
+  width: 100%;
+}
+
+.live-selected-team {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  margin: 5px 0 18px;
+  border-radius: var(--radius-md);
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.live-selected-team svg {
+  color: #34d399;
+}
+
+.live-selected-team div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.live-selected-team span {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.live-auction-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.live-sale-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.live-sale-actions button {
+  width: 100%;
+  justify-content: center;
+  min-height: 46px;
+}
+
+/* Team budgets */
+
+.live-teams-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.live-team-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.live-team-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.live-team-card-heading h3 {
+  margin: 0;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.live-team-card-heading span {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+
+.live-budget-values {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 13px;
+}
+
+.live-budget-values div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.live-budget-values span {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.live-budget-values strong {
+  font-size: 0.95rem;
+}
+
+.live-budget-track {
+  height: 7px;
+  width: 100%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+}
+
+.live-budget-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8b5cf6, #38bdf8);
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+.live-team-card > small {
+  display: block;
+  margin-top: 10px;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+/* Sale history */
+
+.live-history-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.live-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.live-history-table th,
+.live-history-table td {
+  padding: 15px 12px;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.live-history-table th {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.live-history-table td {
+  font-size: 0.88rem;
+}
+
+.live-history-table td:last-child {
+  color: #c084fc;
+  font-weight: 700;
+}
+
+.live-history-empty {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.live-history-empty svg {
+  color: var(--primary);
+}
+
+.live-history-empty p {
+  font-size: 0.88rem;
+}
+
+/* Auction completed */
+
+.live-auction-finished {
+  min-height: 300px;
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.live-auction-finished svg {
+  color: #34d399;
+  margin-bottom: 15px;
+}
+
+.live-auction-finished h2 {
+  margin-bottom: 8px;
+}
+
+.live-auction-finished p {
+  color: var(--text-dim);
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .live-auction-main {
+    grid-template-columns: 1fr;
+  }
+
+  .live-auction-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .live-auction-page {
+    padding: 20px 15px 40px;
+  }
+
+  .live-auction-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .live-auction-header > button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .live-stat-card {
+    padding: 15px;
+  }
+
+  .live-current-item,
+  .live-bidding-panel,
+  .live-teams-section,
+  .live-history-section {
+    padding: 18px;
+  }
+
+  .live-item-image {
+    height: 220px;
+  }
+
+  .live-teams-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .live-history-table th,
+  .live-history-table td {
+    padding: 12px 9px;
+  }
+}

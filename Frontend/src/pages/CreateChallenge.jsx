@@ -109,7 +109,7 @@ export default function CreateChallenge() {
   // --- publish / UI state ---
   const [error, setError] = useState("");
   const [publishedQuiz, setPublishedQuiz] = useState(null);
-  const [copiedPin, setCopiedPin] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   const [expandedQ, setExpandedQ] = useState({}); // per question id
 
   // ─── Teams helpers ───────────────────────────────────────────────
@@ -254,11 +254,12 @@ export default function CreateChallenge() {
     setPublishedQuiz(saved);
   };
 
-  const handleCopyPin = () => {
+  const handleCopyLink = () => {
     if (!publishedQuiz) return;
-    navigator.clipboard.writeText(publishedQuiz.pin);
-    setCopiedPin(true);
-    setTimeout(() => setCopiedPin(false), 2000);
+    const url = `${window.location.origin}/play/${publishedQuiz.id || publishedQuiz.pin}`;
+    navigator.clipboard.writeText(url);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
   };
 
   // ─── Computed preview ─────────────────────────────────────────────
@@ -757,7 +758,7 @@ export default function CreateChallenge() {
             </div>
 
             <div className="info-box">
-              Publishing generates a unique 6-digit PIN saved locally. Share it with your teams!
+              Publishing saves this challenge so anyone can jump straight into the arena on this device or when deployed!
             </div>
           </div>
         </aside>
@@ -772,23 +773,22 @@ export default function CreateChallenge() {
             </div>
             <h2 className="modal-title">Challenge Published!</h2>
             <p className="modal-subtitle">
-              &quot;{publishedQuiz.title}&quot; ({publishedQuiz.gameMode}) is live and ready.
+              &quot;{publishedQuiz.title}&quot; ({publishedQuiz.gameMode}) is live and ready to play.
             </p>
-            <div className="pin-display-box">
-              <div className="pin-label">Shareable 6-Digit Game PIN</div>
-              <div className="pin-digits">{publishedQuiz.pin}</div>
-            </div>
             <div className="modal-actions">
               <button
                 className="button button-primary"
-                onClick={() => navigate(`/play/${publishedQuiz.pin}`)}
+                onClick={() => navigate(`/play/${publishedQuiz.id || publishedQuiz.pin}`)}
               >
                 <Play size={16} />
                 <span>Enter Arena &amp; Play</span>
               </button>
-              <button className="button button-secondary" onClick={handleCopyPin}>
-                {copiedPin ? <Check size={16} color="#10b981" /> : <Copy size={16} />}
-                <span>{copiedPin ? "PIN Copied!" : "Copy Game PIN"}</span>
+              <button className="button button-secondary" onClick={handleCopyLink}>
+                {copiedLink ? <Check size={16} color="#10b981" /> : <Copy size={16} />}
+                <span>{copiedLink ? "Link Copied!" : "Copy Challenge Link"}</span>
+              </button>
+              <button className="button button-secondary" onClick={() => navigate("/play")}>
+                Browse Challenges
               </button>
               <button className="button button-secondary" onClick={() => navigate("/")}>
                 Back to Home
